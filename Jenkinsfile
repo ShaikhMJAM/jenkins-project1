@@ -18,7 +18,8 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 // Checkout the code from the GitHub repository
-                git(url: 'https://github.com/ShaikhMJAM/jenkins-project1.git, branch: 'main', credentialsId: 'github')
+                checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/ShaikhMJAM/jenkins-project1.git']]])
+
             }
         }
 		    }

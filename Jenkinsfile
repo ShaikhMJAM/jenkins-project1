@@ -20,7 +20,7 @@ pipeline {
                 // Checkout the code from the GitHub repository
                 checkout([$class: 'GitSCM', 
           branches: [[name: 'main']], 
-          userRemoteConfigs: [[url: 'git@github.com:ShaikhMJAM/jenkins-project1.git']], 
+          userRemoteConfigs: [[url: 'https://github.com/ShaikhMJAM/jenkins-project1.git']], 
           credentialsId: 'github1'])
 
 

@@ -1,30 +1,39 @@
-pipeline {
-    agent any 
-
-    environment {
-        // Define the JDK and Maven tools
-        JDK_TOOL = 'jdk11'
-        MAVEN_TOOL = 'maven3'
+pipeline{
+    agent{
+        label "jenkins-Agent"
     }
-
-    stages {
-        stage('Clean Workspace') {
-            steps {
-                // Clean the workspace before starting the build
+    tools{
+        jdk "Java17"
+        maven "Maven3"
+    }
+    stages{
+        stage("Cleanup Workspace"){
+            steps{
                 cleanWs()
             }
-        }
-
-        stage('Checkout Code') {
-            steps {
-                // Checkout the code from the GitHub repository
-                checkout([$class: 'GitSCM', 
-          branches: [[name: 'main']], 
-          userRemoteConfigs: [[url: 'https://github.com/ShaikhMJAM/jenkins-project1.git']], 
-          credentialsId: 'github1'])
-
-
+      
+            }
+        stage("Checkout from SCM"){
+            steps{
+                git branch: 'main', credentialsID: "github", url: 'https://github.com/ShaikhMJAM/jenkins-project1.git'
             }
         }
-		    }
+
+        stage("Build Application"){
+            steps{
+                sh "mnn clean package"
+            }
+
+        }
+        stage("Test Application"){
+            steps{
+                sh 'mvn test'
+            }
+
+        }
+
+        }
 }
+
+    
+    
